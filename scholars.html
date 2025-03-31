@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholars Portal - FCI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="scholars.css">
+    <script src="scholars.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="FCI Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="scholars.html" class="active">Scholars Portal</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="progress-tracker">
+        <h2>Progress Tracker</h2>
+        <div class="tracker">
+            <label>Milestone 1: coding marathon</label>
+            <progress value="70" max="100"></progress>
+
+            <label>Milestone 2:tech talk</label>
+            <progress value="40" max="100"></progress>
+
+            <label>Milestone 3: batch leader</label>
+            <progress value="20" max="100"></progress>
+        </div>
+    </section>
+
+    <section class="mentor-chat">
+        <h2>Mentor Communication</h2>
+        <div class="chat-container">
+            <div id="chat-box"></div>
+            <input type="text" id="message" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FCI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

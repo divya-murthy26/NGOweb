@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker - FCI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="attendance.css">
+    <script src="attendance.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="FCI Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="scholars.html">Scholars Portal</a></li>
+                <li><a href="attendance.html" class="active">Attendance</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="attendance-section">
+        <h2>Attendance Tracker</h2>
+        
+        <input type="text" id="searchBar" placeholder="Search by Event or Date..." onkeyup="filterAttendance()">
+        
+        <table id="attendanceTable">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Date</th>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AI Workshop</td>
+                    <td>2025-03-15</td>
+                    <td>John Doe</td>
+                    <td>Present</td>
+                </tr>
+                <tr>
+                    <td>Cybersecurity Seminar</td>
+                    <td>2025-03-20</td>
+                    <td>Jane Smith</td>
+                    <td>Absent</td>
+                </tr>
+                <tr>
+                    <td>Machine Learning Bootcamp</td>
+                    <td>2025-03-25</td>
+                    <td>Michael Brown</td>
+                    <td>Present</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button onclick="downloadPDF()">Download as PDF</button>
+        <button onclick="downloadExcel()">Download as Excel</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FCI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

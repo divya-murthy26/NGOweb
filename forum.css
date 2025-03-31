@@ -1,0 +1,65 @@
+.forum-section {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login {
+    margin-bottom: 20px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#forum-posts {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.question {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.question .username {
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.question .category {
+    font-style: italic;
+    font-size: 14px;
+    color: #666;
+}
+
+.upvote {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background: #007bff;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

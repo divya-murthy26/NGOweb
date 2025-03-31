@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Forum - FCI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="forum.css">
+    <script src="forum.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="FCI Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="resources.html">Resource Hub</a></li>
+                <li><a href="scholars.html">Scholars Portal</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="forum.html" class="active">Discussion Forum</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="forum-section">
+        <h2>Discussion Forum</h2>
+
+        <div class="login">
+            <input type="text" id="username" placeholder="Enter your name">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div class="post-question">
+            <select id="category">
+                <option value="general">General</option>
+                <option value="event">Event-Specific</option>
+                <option value="feedback">Feedback</option>
+                <option value="suggestion">Suggestions</option>
+            </select>
+            <textarea id="question" placeholder="Ask a question..."></textarea>
+            <button onclick="postQuestion()">Post</button>
+        </div>
+
+        <div id="forum-posts">
+            <!-- Questions will be dynamically added here -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FCI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

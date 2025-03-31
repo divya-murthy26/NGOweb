@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Hub - FCI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resources.css">
+    <script src="resources.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="FCI Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="resources.html" class="active">Resource Hub</a></li>
+                <li><a href="scholars.html">Scholars Portal</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="resource-section">
+        <h2>Resource Hub</h2>
+
+        <input type="text" id="searchBar" placeholder="Search resources..." onkeyup="filterResources()">
+
+        <div class="categories">
+            <button onclick="filterCategory('all')">All</button>
+            <button onclick="filterCategory('files')">Downloadable Files</button>
+            <button onclick="filterCategory('videos')">Video Tutorials</button>
+            <button onclick="filterCategory('guidelines')">Guidelines</button>
+        </div>
+
+        <div class="resource-list">
+            <div class="resource-item" data-category="files">
+                <h3>Cybersecurity Guide</h3>
+                <p>A complete guide on cybersecurity best practices.</p>
+                <a href="assets/resources/cybersecurity-guide.pdf" download>Download</a>
+            </div>
+
+            <div class="resource-item" data-category="videos">
+                <h3>Machine Learning Basics</h3>
+                <p>Introductory video tutorial on machine learning.</p>
+                <a href="https://www.youtube.com/watch?v=Gv9_4yMHFhI" target="_blank">Watch</a>
+            </div>
+
+            <div class="resource-item" data-category="guidelines">
+                <h3>Research Paper Formatting</h3>
+                <p>Guidelines on writing and formatting research papers.</p>
+                <a href="assets/resources/research-guidelines.pdf" download>Download</a>
+            </div>
+
+            <div class="resource-item" data-category="files">
+                <h3>Python Cheat Sheet</h3>
+                <p>A handy Python programming cheat sheet.</p>
+                <a href="assets/resources/python-cheatsheet.pdf" download>Download</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FCI. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
