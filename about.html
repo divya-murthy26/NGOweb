@@ -11,22 +11,29 @@
 
     <header>
         <div class="logo">
-            <img src="assets/images/logo.png" alt="FCI Logo">
+            <img src="fci logo.jpg" alt="FCI Logo">
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="resources.html">Resource Hub</a></li>
-                <li><a href="scholars.html">Scholars Portal</a></li>
-                <li><a href="attendance.html">Attendance</a></li>
-                <li><a href="leaderboard.html">Leaderboard</a></li>
-                <li><a href="forum.html">Discussion Forum</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <nav class="navbar">
+                <a href="#" class="toggle-button">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </a>
+                    <div class="navbar-links">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="scholars.html">Scholars Portal</a></li>
+                    <li><a href="attendance.html">Attendance</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                </div>
+            </nav>
     </header>
+    
 
     <section class="about-section">
         <h2>About Us – Fund a Child in India (FCI)</h2>
@@ -42,6 +49,14 @@
     <footer>
         <p>&copy; 2025 FCI. All rights reserved.</p>
     </footer>
+    <script>
+        const toggleButton = document.getElementsByClassName('toggle-button')[0];
+            const navbarLinks = document.getElementsByClassName('navbar-links')[0];
+            
+            toggleButton.addEventListener('click', () => {
+                navbarLinks.classList.toggle('active');
+            });
+        </script>  
 
 </body>
 </html>
