@@ -19,6 +19,8 @@
 
         <label for="mode">Mode of Interaction:</label>
         <input type="text" id="mode" name="mode" placeholder="Online / Offline" required />
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="mode" required />
 
         <label for="mentiName">Name of the Mentee:</label>
         <input type="text" id="mentiName" name="mentiName" required />
@@ -57,11 +59,13 @@
       const params = {
         date: document.getElementById("date").value,
         mode: document.getElementById("mode").value,
+        email:document.getElementById("Email").value,
         mentiName: document.getElementById("mentiName").value,
         mentorName: document.getElementById("mentorName").value,
         duration: document.getElementById("duration").value,
         points: document.getElementById("points").value,
         feedbackText: document.getElementById("feedbackText").value,
+        
       };
 
       emailjs.send("service_03lkqxl", "template_r5la49l", params)
