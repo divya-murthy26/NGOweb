@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Calendar</title>
+    <link rel="stylesheet" href="calendar.css">
+</head>
+
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prevMonth">&#8592;</button>
+            <h2 id="currentMonth"></h2>
+            <button id="nextMonth">&#8594;</button>
+        </div>
+        <div class="calendar">
+            <div class="days-of-week">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="calendar-days" id="calendarDays"></div>
+        </div>
+    </div>
+
+    <div class="event-popup" id="eventPopup">
+        <h3>Add Event</h3>
+        <input type="text" id="eventTitle" placeholder="Event Title" />
+        <input type="date" id="eventDate" />
+        <div class="popup-buttons">
+            <button id="saveEvent">Save</button>
+            <button id="cancelEvent">Cancel</button>
+        </div>
+    </div>
+
+    <div class="event-details">
+        <h3>Scheduled Events</h3>
+        <ul id="eventList"></ul>
+    </div>
+
+    <script src="calendar.js"></script>
+</body>
+
+</html>
