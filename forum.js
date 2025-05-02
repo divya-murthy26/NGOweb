@@ -52,12 +52,52 @@ function postQuestion() {
         upvoteButton.textContent = "Upvote (" + votes + ")";
     });
 
+    // 🔽 REPLY SECTION (Threaded)
+    let replySection = document.createElement("div");
+    replySection.classList.add("reply-section");
+
+    let replyInput = document.createElement("textarea");
+    replyInput.classList.add("reply-input");
+    replyInput.placeholder = "Write a reply...";
+
+    let replyButton = document.createElement("button");
+    replyButton.textContent = "Reply";
+    replyButton.classList.add("reply-btn");
+
+    let repliesContainer = document.createElement("div");
+    repliesContainer.classList.add("replies");
+
+    replyButton.addEventListener("click", function () {
+        let replyText = replyInput.value.trim();
+        if (replyText === "") {
+            alert("Reply cannot be empty!");
+            return;
+        }
+
+        let replyDiv = document.createElement("div");
+        replyDiv.classList.add("reply");
+        replyDiv.innerHTML = `<strong>${currentUser}:</strong> ${replyText}`;
+        repliesContainer.appendChild(replyDiv);
+
+        replyInput.value = "";
+    });
+
+    replySection.appendChild(replyInput);
+    replySection.appendChild(replyButton);
+    replySection.appendChild(repliesContainer);
+
+    // ⬇ Append all to question
     questionDiv.appendChild(userSpan);
     questionDiv.appendChild(categorySpan);
     questionDiv.appendChild(questionP);
     questionDiv.appendChild(upvoteButton);
+    questionDiv.appendChild(replySection);
 
     forumPosts.prepend(questionDiv);
 
     document.getElementById("question").value = "";
 }
+let role = document.getElementById("role").value;
+currentUser = { name: usernameInput, role: role };
+
+
