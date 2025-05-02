@@ -1,9 +1,23 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* About Section */
 .about-section {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 40px auto;
     background: white;
-    padding: 25px;
-    border-radius: 8px;
+    padding: 30px;
+    border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
@@ -16,12 +30,46 @@
 .about-section p {
     font-size: 18px;
     line-height: 1.6;
-    color: #333;
+    color: #444;
     margin-bottom: 15px;
 }
 
 .about-section strong {
     color: #007bff;
+}
+
+/* Info Cards: Vision, Mission, Areas */
+.info-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    background-color: #ffffff;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    background-color: #f0f8ff;
+}
+
+.info-card h3 {
+    color: #ff6600;
+    margin-bottom: 10px;
+}
+
+.info-card p {
+    color: #444;
+    font-size: 16px;
 }
 
 /* Founders Section */
@@ -46,16 +94,17 @@
 }
 
 .card {
-    background-color: white;
+    background-color: #fff;
     padding: 20px;
     border-radius: 12px;
     width: 280px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    background-color: #f0f8ff;
 }
 
 .card img {
@@ -76,4 +125,203 @@
     font-size: 15px;
     color: #555;
     line-height: 1.5;
+}
+
+/* Programs Section */
+.programs-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.programs-section h2 {
+    font-size: 2rem;
+    color: #ff6600;
+    margin-bottom: 30px;
+}
+
+.programs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.program-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.program-card:hover {
+    transform: translateY(-5px);
+    background-color: #f0f8ff;
+}
+
+.program-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.program-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.program-card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.program-card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.program-card a:hover {
+    background-color: #0056b3;
+}
+
+/* Partners Section */
+.partners-section {
+    max-width: 1000px;
+    margin: 60px auto;
+    text-align: center;
+}
+
+.partners-section h2 {
+    font-size: 2rem;
+    color: #ff6600;
+    margin-bottom: 30px;
+}
+
+.partners-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.partner-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.partner-card:hover {
+    transform: translateY(-5px);
+    background-color: #f0f8ff;
+}
+
+.partner-card img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+
+.partner-card h3 {
+    color: #333;
+    font-size: 18px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 60px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+
+    .info-row,
+    .founders-container,
+    .programs-container,
+    .partners-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-card,
+    .card,
+    .program-card,
+    .partner-card {
+        width: 90%;
+    }
+}
+
+/* Hamburger menu (if used) */
+.toggle-button {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.toggle-button .bar {
+    height: 3px;
+    width: 25px;
+    background-color: #333;
+    margin: 4px 0;
+}
+
+@media screen and (max-width: 768px) {
+    .toggle-button {
+        display: flex;
+    }
+
+    .navbar-links ul {
+        display: none;
+        flex-direction: column;
+    }
+
+    .navbar-links.active ul {
+        display: flex;
+    }
+}
+
+/* Info Cards: Vision, Mission, Areas */
+.info-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    background-color: #ffffff;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    background-color: #f0f8ff;
 }

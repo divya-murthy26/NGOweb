@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support to the Poor</title>
+    <link rel="stylesheet" href="poor.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <h2 class="title">Relevant Support to the Poor</h2>
+
+            <p class="description">
+                It focuses on the immediate needs of the poor & indigent persons
+                through the provision of school material supply and physical
+                nourishment to children and youth.
+            </p>
+            <p class="description">
+                School supplies such as notebooks, sports equipment, school band,
+                school uniforms with belt & tie, school shoes, school bags, geometry
+                boxes, sketch pens & crayons are distributed to school students from
+                Government and NGO-run schools. Besides, cash awards and watches were
+                given to the school toppers to encourage and motivate them to pursue
+                their higher education. Books & Soft Toys were donated to Libraries in
+                Schools & Communities in Karnataka.
+            </p>
+
+            <section class="gallery-section">
+                <h3 class="subtitle">Gallery</h3>
+                <div class="carousel">
+                    <button class="arrow left" onclick="prevImage()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <img id="galleryImage" src="support1.jpg" alt="Gallery Image" />
+                    <button class="arrow right" onclick="nextImage()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const galleryImages = [
+            "support1.jpg",
+            "support2.jpg",
+            "support3.jpg",
+            "support4.jpg",
+            "support5.jpg"
+        ];
+        let currentIndex = 0;
+
+        function showImage(index) {
+            document.getElementById("galleryImage").src = galleryImages[index];
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        setInterval(nextImage, 3000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Education</title>
+    <link rel="stylesheet" href="education.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <h2 class="title">Education</h2>
+            <p class="description">
+                FCI, being an education initiative, runs and envisages programs and
+                projects in the area of academics, talent development, and
+                importantly, after-school child development programs in the form of
+                skills training and workshops for primary and secondary education
+                students. For higher education students, FCI provides soft & hard
+                skills training, workshops, and field visits besides academics and
+                talent development.
+            </p>
+            <p class="description">
+                FCI supports girl children from its primary target communities,
+                encouraging girl child education, employable skills, and imparting
+                special useful courses for their career growth.
+            </p>
+
+            <section class="gallery">
+                <h3 class="subtitle">Gallery</h3>
+                <div class="carousel">
+                    <button class="arrow left" onclick="prevImage()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <img id="galleryImage" src="education1.jpg" alt="Gallery Image" />
+                    <button class="arrow right" onclick="nextImage()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section class="section-box">
+                <h3 class="subtitle">Girls in Tech</h3>
+                <p class="description bold">
+                    "Empowering Engineering Girl Students through Skill Enhancement,
+                    STEM/Digital Learning & Educational Assistance"
+                </p>
+                <p class="description">
+                    This project aims at supporting young women, first-generation
+                    engineers, to complete their engineering studies and land their
+                    dream jobs. It provides an enabling environment to enhance their
+                    employability.
+                </p>
+                <p class="description">
+                    Participants receive industry-specific employability skills,
+                    including soft, technical, and professional training. Opportunities
+                    such as technology festivals, hackathons, and seminars on trending
+                    topics are provided. Additionally, students are paired with working
+                    professionals as mentors and receive a monthly stipend to help cover
+                    essential expenses.
+                </p>
+            </section>
+
+            <section class="section-box">
+                <h3 class="subtitle">Draw Your Dreams</h3>
+                <p class="description bold">
+                    "Creating Dreams and Aspirations through Creative Art"
+                </p>
+                <p class="description">
+                    The "Drawing Competition" is a platform for children to exhibit
+                    their artistic talents, express their dreams, and gain competition
+                    experience. It is open to underprivileged school-going children from
+                    grades 1 to 9, regardless of their region, religion, or caste.
+                </p>
+                <p class="description">
+                    This event helps children build self-confidence, shifting their
+                    mindset from "I can't draw" to "I can enter this contest... and I
+                    might win!"
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const galleryImages = [
+            "education1.jpg",
+            "education2.jpg",
+            "education3.jpg",
+            "education4.jpg",
+            "education5.jpg",
+            "education6.jpg",
+            "education7.jpg"
+        ];
+        let currentIndex = 0;
+
+        function showImage(index) {
+            const imgElement = document.getElementById("galleryImage");
+            imgElement.src = galleryImages[index];
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        setInterval(nextImage, 2000); // Auto scroll every 3 seconds
+    </script>
+</body>
+
+</html>

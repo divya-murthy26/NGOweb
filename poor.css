@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+}
+
+.container {
+    min-height: 100vh;
+    padding: 1.5rem;
+}
+
+.content {
+    max-width: 64rem;
+    margin: auto;
+    text-align: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 2rem;
+}
+
+.description {
+    margin-top: 1rem;
+    font-size: 1.125rem;
+    color: #374151;
+    line-height: 1.7;
+}
+
+.gallery-section {
+    margin-top: 3rem;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+    height: 16rem;
+    margin: 1.5rem auto;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #1f2937;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 50%;
+    opacity: 0.75;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.arrow:hover {
+    opacity: 1;
+}
+
+.arrow.left {
+    left: 0.5rem;
+}
+
+.arrow.right {
+    right: 0.5rem;
+}

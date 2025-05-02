@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Centres</title>
+    <link rel="stylesheet" href="learningcenters.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <!-- Title -->
+            <h2 class="title">Learning Centres</h2>
+
+            <!-- Description -->
+            <p class="description">
+                It focuses on equipping the poor deserving children & youth through
+                establishing, running, and maintaining Training Centres; Community
+                Learning/Enrichment/Tuition Centres; Community Libraries, etc. for the
+                sole use of the public good benefiting the students of weaker sections
+                of society.
+            </p>
+            <p class="description">
+                FCI launched its training wing <span class="bold">“FCI Training Centre”</span> in Bangalore
+                in the year 2016. Training in Skill Enhancement was conducted for
+                several batches of girl students pursuing engineering courses. The
+                training was offered in soft skills, technical skills, and
+                professional skills, mainly focusing on preparing them for jobs.
+            </p>
+            <p class="description">
+                <span class="bold">IVT-India</span> was the training partner
+                of Find a Child in India to conduct these training sessions. The
+                training centre was closed in 2020 when COVID-19 crept in as the
+                sessions were moved online.
+            </p>
+
+            <!-- Gallery Section -->
+            <section class="gallery-section">
+                <h3 class="subtitle">Gallery</h3>
+                <div class="carousel">
+                    <button class="arrow left" onclick="prevImage()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <img id="galleryImage" src="learning1.jpg" alt="Gallery Image" />
+                    <button class="arrow right" onclick="nextImage()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const galleryImages = [
+            "learning1.jpg",
+            "learning2.jpg",
+            "learning3.jpg",
+            "learning4.jpg",
+            "learning5.jpg"
+        ];
+        let currentIndex = 0;
+
+        function showImage(index) {
+            document.getElementById("galleryImage").src = galleryImages[index];
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            showImage(currentIndex);
+        }
+
+        setInterval(nextImage, 3000);
+    </script>
+</body>
+
+</html>
