@@ -1,5 +1,5 @@
 .attendance-section {
-    max-width: 800px;
+    max-width: 900px;
     margin: 20px auto;
     background: white;
     padding: 20px;
@@ -8,37 +8,54 @@
     text-align: center;
 }
 
-input {
-    width: 100%;
+input,
+select {
     padding: 10px;
-    margin-bottom: 15px;
+    margin: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background: #ff6600;
-    color: white;
+    width: calc(100% - 20px);
+    max-width: 300px;
 }
 
 button {
-    margin-top: 15px;
+    margin-top: 10px;
     padding: 10px 15px;
     background: #ff6600;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+#attendanceContainer {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.event-thread {
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.event-header {
+    font-weight: bold;
+    font-size: 18px;
+    color: #ff6600;
+    margin-bottom: 10px;
+}
+
+.student-list {
+    padding-left: 20px;
+}
+
+.student-entry {
+    margin-bottom: 5px;
 }

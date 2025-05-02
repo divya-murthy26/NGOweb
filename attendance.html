@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Tracker - FCI</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="attendance.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="attendance.js" defer></script>
 </head>
+
 <body>
 
     <header>
@@ -15,12 +19,12 @@
             <img src="fci logo.jpg" alt="FCI Logo">
         </div>
         <nav class="navbar">
-                <a href="#" class="toggle-button">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </a>
-                    <div class="navbar-links">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="scholars.html">Scholars Portal</a></li>
@@ -28,45 +32,39 @@
                     <li><a href="leaderboard.html">Leaderboard</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                </div>
-            </nav>
+            </div>
+        </nav>
     </header>
-    
+
     <section class="attendance-section">
         <h2>Attendance Tracker</h2>
-        
+
+        <div class="form-section">
+            <h3>Add Event</h3>
+            <input type="text" id="eventName" placeholder="Event Name">
+            <input type="date" id="eventDate">
+            <button onclick="addEvent()">Add Event</button>
+        </div>
+
+        <div class="form-section">
+            <h3>Add Student to Event</h3>
+            <select id="eventSelect">
+                <option value="">-- Select Event --</option>
+            </select>
+            <input type="text" id="studentName" placeholder="Student Name">
+            <select id="batchSelect">
+                <option value="B3">B3</option>
+                <option value="B4">B4</option>
+                <option value="B5">B5</option>
+            </select>
+            <button onclick="addStudent()">Add Student</button>
+        </div>
+
         <input type="text" id="searchBar" placeholder="Search by Event or Date..." onkeyup="filterAttendance()">
-        
-        <table id="attendanceTable">
-            <thead>
-                <tr>
-                    <th>Event Name</th>
-                    <th>Date</th>
-                    <th>Student Name</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>AI Workshop</td>
-                    <td>2025-03-15</td>
-                    <td>John Doe</td>
-                    <td>Present</td>
-                </tr>
-                <tr>
-                    <td>Cybersecurity Seminar</td>
-                    <td>2025-03-20</td>
-                    <td>Jane Smith</td>
-                    <td>Absent</td>
-                </tr>
-                <tr>
-                    <td>Machine Learning Bootcamp</td>
-                    <td>2025-03-25</td>
-                    <td>Michael Brown</td>
-                    <td>Present</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div id="attendanceContainer">
+            <!-- Dynamic threads will appear here -->
+        </div>
 
         <button onclick="downloadPDF()">Download as PDF</button>
         <button onclick="downloadExcel()">Download as Excel</button>
@@ -75,13 +73,15 @@
     <footer>
         <p>&copy; 2025 FCI. All rights reserved.</p>
     </footer>
+
     <script>
         const toggleButton = document.getElementsByClassName('toggle-button')[0];
-            const navbarLinks = document.getElementsByClassName('navbar-links')[0];
-            
-            toggleButton.addEventListener('click', () => {
-                navbarLinks.classList.toggle('active');
-            });
-        </script>  
+        const navbarLinks = document.getElementsByClassName('navbar-links')[0];
+
+        toggleButton.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+    </script>
 </body>
+
 </html>
