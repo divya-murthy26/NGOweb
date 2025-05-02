@@ -1,68 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Calendar - FCI</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Interactive Calendar</title>
     <link rel="stylesheet" href="calendar.css">
-    <script src="calendar.js" defer></script>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Config -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWwikVGl6oHrCsAIWA9L3facXPcwAMk9c",
+            authDomain: "fci-auth.firebaseapp.com",
+            projectId: "fci-auth",
+            storageBucket: "fci-auth.appspot.com",
+            messagingSenderId: "1026364980448",
+            appId: "1:1026364980448:web:f8f0d91949dcb79e976485"
+        };
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
 </head>
+
 <body>
-
-    <header>
-        <div class="logo">
-            <img src="fci logo.jpg" alt="FCI Logo">
-        </div>
-        <nav class="navbar">
-                <a href="#" class="toggle-button">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </a>
-                    <div class="navbar-links">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    
-                    <li><a href="scholars.html">Scholars Portal</a></li>
-                    <li><a href="attendance.html">Attendance</a></li>
-                    <li><a href="leaderboard.html">Leaderboard</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-                </div>
-            </nav>
-    </header>
-    
-
-    <section class="calendar-container">
+    <div class="calendar-container">
         <div class="calendar-header">
-            <button id="prevMonth">&lt;</button>
+            <button id="prevMonth">&#8592;</button>
             <h2 id="currentMonth"></h2>
-            <button id="nextMonth">&gt;</button>
+            <button id="nextMonth">&#8594;</button>
         </div>
+
         <div class="calendar">
             <div class="days-of-week">
-                <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
             </div>
-            <div id="calendarDays" class="calendar-days"></div>
+            <div class="calendar-days" id="calendarDays"></div>
         </div>
-    </section>
+    </div>
 
-    <section class="event-details">
-        <h2>Upcoming Events</h2>
+    <!-- Event Popup -->
+    <div class="event-popup" id="eventPopup" style="display: none;">
+        <h3>Add Event</h3>
+        <input type="text" id="eventTitle" placeholder="Event Title" />
+        <input type="date" id="eventDate" />
+        <div class="popup-buttons">
+            <button id="saveEvent">Save</button>
+            <button id="cancelEvent">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Scheduled Events -->
+    <div class="event-details">
+        <h3>Scheduled Events</h3>
         <ul id="eventList"></ul>
-    </section>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 FCI. All rights reserved.</p>
-    </footer>
-    <script>
-        const toggleButton = document.getElementsByClassName('toggle-button')[0];
-            const navbarLinks = document.getElementsByClassName('navbar-links')[0];
-            
-            toggleButton.addEventListener('click', () => {
-                navbarLinks.classList.toggle('active');
-            });
-        </script>  
+   
+
+    <!-- Calendar Logic -->
+    <script src="calendar.js"></script>
 </body>
+
 </html>
