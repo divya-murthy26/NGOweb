@@ -105,6 +105,34 @@ function addStudent() {
         });
 }
 
+function deleteEvent(eventId) {
+    if (!confirm("Are you sure you want to delete this event?")) return;
+
+    // Remove from local list
+    eventsList = eventsList.filter(event => event.id !== eventId);
+
+    // Remove from dropdown
+    const select = document.getElementById("eventSelect");
+    for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === eventId) {
+            select.remove(i);
+            break;
+        }
+    }
+
+    // Delete from Firestore
+    db.collection("events").doc(eventId).delete()
+        .then(() => {
+            console.log("Event deleted from Firestore:", eventId);
+        })
+        .catch((error) => {
+            console.error("Error deleting event:", error);
+        });
+
+    // Re-render the threads
+    renderThreads();
+}
+
 function renderThreads(filteredList = null) {
     const container = document.getElementById("attendanceContainer");
     container.innerHTML = "";
@@ -117,7 +145,19 @@ function renderThreads(filteredList = null) {
 
         const header = document.createElement("div");
         header.className = "event-header";
+
+        // Add text content
         header.textContent = `${event.name} - ${event.date}`;
+
+        // Add delete button
+        const deleteBtn = document.createElement("span");
+        deleteBtn.textContent = " 🗑️";
+        deleteBtn.style.cursor = "pointer";
+        deleteBtn.title = "Delete Event";
+        deleteBtn.style.float = "right";
+        deleteBtn.onclick = () => deleteEvent(event.id);
+
+        header.appendChild(deleteBtn);
 
         const studentList = document.createElement("div");
         studentList.className = "student-list";

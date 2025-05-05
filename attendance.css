@@ -59,3 +59,8 @@ button {
 .student-entry {
     margin-bottom: 5px;
 }
+.event-header span {
+    font-size: 18px;
+    color: red;
+    margin-left: 10px;
+}
