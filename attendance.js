@@ -1,5 +1,43 @@
 let eventsList = [];
 
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+// Load existing events once user is authenticated
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        loadEvents(user.uid);
+    } else {
+        alert("Please log in to use the attendance system.");
+        window.location.href = "index.html"; // redirect if not logged in
+    }
+});
+
+function loadEvents(userId) {
+    db.collection("events").where("userId", "==", userId).get()
+        .then(snapshot => {
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const event = {
+                    id: doc.id,
+                    name: data.name,
+                    date: data.date,
+                    students: data.students || []
+                };
+                eventsList.push(event);
+
+                const option = document.createElement("option");
+                option.value = doc.id;
+                option.textContent = `${event.name} - ${event.date}`;
+                document.getElementById("eventSelect").appendChild(option);
+            });
+            renderThreads();
+        })
+        .catch(error => {
+            console.error("Error loading events:", error);
+        });
+}
+
 function addEvent() {
     const name = document.getElementById("eventName").value.trim();
     const date = document.getElementById("eventDate").value;
@@ -9,30 +47,36 @@ function addEvent() {
         return;
     }
 
-    const eventId = `${name}-${date}`;
-    if (eventsList.find(e => e.id === eventId)) {
+    const existing = eventsList.find(e => e.name === name && e.date === date);
+    if (existing) {
         alert("Event already exists.");
         return;
     }
 
     const newEvent = {
-        id: eventId,
         name,
         date,
-        students: []
+        students: [],
+        userId: auth.currentUser.uid
     };
 
-    eventsList.push(newEvent);
+    db.collection("events").add(newEvent)
+        .then(docRef => {
+            newEvent.id = docRef.id;
+            eventsList.push(newEvent);
 
-    const option = document.createElement("option");
-    option.value = eventId;
-    option.textContent = `${name} - ${date}`;
-    document.getElementById("eventSelect").appendChild(option);
+            const option = document.createElement("option");
+            option.value = docRef.id;
+            option.textContent = `${name} - ${date}`;
+            document.getElementById("eventSelect").appendChild(option);
 
-    document.getElementById("eventName").value = "";
-    document.getElementById("eventDate").value = "";
-
-    renderThreads();
+            document.getElementById("eventName").value = "";
+            document.getElementById("eventDate").value = "";
+            renderThreads();
+        })
+        .catch(error => {
+            console.error("Error adding event:", error);
+        });
 }
 
 function addStudent() {
@@ -46,14 +90,19 @@ function addStudent() {
     }
 
     const event = eventsList.find(e => e.id === eventId);
-    event.students.push({
-        name: studentName,
-        batch
-    });
+    const newStudent = { name: studentName, batch };
+    event.students.push(newStudent);
 
-    document.getElementById("studentName").value = "";
-
-    renderThreads();
+    db.collection("events").doc(eventId).update({
+        students: event.students
+    })
+        .then(() => {
+            document.getElementById("studentName").value = "";
+            renderThreads();
+        })
+        .catch(error => {
+            console.error("Error updating students:", error);
+        });
 }
 
 function renderThreads(filteredList = null) {

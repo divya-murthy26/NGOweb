@@ -2,13 +2,35 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attendance Tracker - FCI</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="attendance.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="attendance.css" />
+
+    <!-- Firebase SDKs (version 8.10.1 for namespaced style) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+       const firebaseConfig = {
+            apiKey: "AIzaSyDWwikVGl6oHrCsAIWA9L3facXPcwAMk9c",
+            authDomain: "fci-auth.firebaseapp.com",
+            projectId: "fci-auth",
+            storageBucket: "fci-auth.appspot.com",
+            messagingSenderId: "1026364980448",
+            appId: "1:1026364980448:web:f8f0d91949dcb79e976485"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- jsPDF & AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Your main logic file (after Firebase is initialized) -->
     <script src="attendance.js" defer></script>
 </head>
 
@@ -16,7 +38,7 @@
 
     <header>
         <div class="logo">
-            <img src="fci logo.jpg" alt="FCI Logo">
+            <img src="fci logo.jpg" alt="FCI Logo" />
         </div>
         <nav class="navbar">
             <a href="#" class="toggle-button">
@@ -41,8 +63,8 @@
 
         <div class="form-section">
             <h3>Add Event</h3>
-            <input type="text" id="eventName" placeholder="Event Name">
-            <input type="date" id="eventDate">
+            <input type="text" id="eventName" placeholder="Event Name" />
+            <input type="date" id="eventDate" />
             <button onclick="addEvent()">Add Event</button>
         </div>
 
@@ -51,7 +73,7 @@
             <select id="eventSelect">
                 <option value="">-- Select Event --</option>
             </select>
-            <input type="text" id="studentName" placeholder="Student Name">
+            <input type="text" id="studentName" placeholder="Student Name" />
             <select id="batchSelect">
                 <option value="B3">B3</option>
                 <option value="B4">B4</option>
@@ -60,7 +82,7 @@
             <button onclick="addStudent()">Add Student</button>
         </div>
 
-        <input type="text" id="searchBar" placeholder="Search by Event or Date..." onkeyup="filterAttendance()">
+        <input type="text" id="searchBar" placeholder="Search by Event or Date..." onkeyup="filterAttendance()" />
 
         <div id="attendanceContainer">
             <!-- Dynamic threads will appear here -->
