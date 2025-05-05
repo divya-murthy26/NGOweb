@@ -1,88 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mentor-Menti Interaction Feedback Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mentor-Mentee Interaction Feedback Form</title>
   <link rel="stylesheet" href="feedback.css" />
 </head>
-
 <body>
-  <section id="feedback" class="feedback-section">
-    <div class="feedback-container">
-      <h2>Mentor-Menti Interaction Feedback Form</h2>
 
-      <form id="feedbackForm">
-        <label for="date">Date of Interaction:</label>
-        <input type="date" id="date" name="date" required />
+  <div class="container">
+    <h2>Mentor-Mentee Interaction Feedback Form</h2>
+    <form action="https://formsubmit.co/u25uv23t029023@gmail.com" method="POST" reset()>
+      <label for="date">Date of Interaction</label>
+      <input type="date" id="date" name="date" required>
 
-        <label for="mode">Mode of Interaction:</label>
-        <input type="text" id="mode" name="mode" placeholder="Online / Offline" required />
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="mode" required />
+      <label for="mode">Mode of Interaction</label>
+      <select id="mode" name="mode" required>
+        <option value="">Select</option>
+        <option value="Online">Online</option>
+        <option value="Offline">Offline</option>
+      </select>
 
-        <label for="mentiName">Name of the Mentee:</label>
-        <input type="text" id="mentiName" name="mentiName" required />
+      <label for="email">Mentee Email</label>
+      <input type="email" id="email" name="email" required>
 
-        <label for="mentorName">Name of the Mentor:</label>
-        <input type="text" id="mentorName" name="mentorName" required />
+      <label for="menteeName">Mentee Name</label>
+      <input type="text" id="menteeName" name="menteeName" required>
 
-        <label for="duration">Duration (in hours):</label>
-        <input type="number" id="duration" name="duration" min="0.1" step="0.1" required />
+      <label for="mentorName">Mentor Name</label>
+      <input type="text" id="mentorName" name="mentorName" required>
 
-        <label for="points">Points Discussed:</label>
-        <textarea id="points" name="points" rows="4" required></textarea>
+      <label for="duration">Duration of Interaction (in minutes)</label>
+      <input type="number" id="duration" name="duration"step="1.0hr" required>
 
-        <label for="feedback">Feedback on the Interaction:</label>
-        <textarea id="feedbackText" name="feedbackText" rows="5" required></textarea>
+      
 
-        <button type="submit">Submit Feedback</button>
-        <p id="status"></p>
-      </form>
-    </div>
-  </section>
+      <label for="points">Points to be Discussed</label>
+      <textarea id="points" name="points" required></textarea>
 
-  <!-- Load EmailJS SDK v4 using module -->
-  <script type="module">
-    import emailjs from 'https://cdn.emailjs.com/dist/email.min.mjs';
+      <label for="feedback">Feedback on Interaction</label>
+      <textarea id="feedback" name="feedback" required></textarea>
 
-    // Initialize EmailJS with your public key
-    emailjs.init("RVchXXczETbxtsAmJ");
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
 
-    const form = document.getElementById("feedbackForm");
-    const status = document.getElementById("status");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const params = {
-        date: document.getElementById("date").value,
-        mode: document.getElementById("mode").value,
-        email:document.getElementById("Email").value,
-        mentiName: document.getElementById("mentiName").value,
-        mentorName: document.getElementById("mentorName").value,
-        duration: document.getElementById("duration").value,
-        points: document.getElementById("points").value,
-        feedbackText: document.getElementById("feedbackText").value,
-        
-      };
-
-      emailjs.send("service_03lkqxl", "template_r5la49l", params)
-        .then(() => {
-          alert("Feedback submitted successfully!");
-          status.textContent = "✔️ Feedback submitted successfully!";
-          status.style.color = "green";
-          form.reset();
-        })
-        .catch((error) => {
-          console.error("FAILED...", error);
-          alert("Failed to send feedback. Please try again.");
-          status.textContent = "❌ Failed to submit feedback.";
-          status.style.color = "red";
-        });
-    });
-  </script>
 </body>
-
 </html>

@@ -1,59 +1,93 @@
-.feedback-section {
-    padding: 4rem 1rem;
-    background-color: #f0f4f8;
-    text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #fffaf5, #fff0e0);
+  margin: 0;
+  padding: 0;
 }
 
-.feedback-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.container {
+  max-width: 750px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(255, 168, 82, 0.15);
+  transition: transform 0.3s ease;
 }
 
-.feedback-container h2 {
-    font-size: 2rem;
-    color: orangered;
-    margin-bottom: 1.5rem;
+.container:hover {
+  transform: scale(1.01);
 }
 
-.feedback-container label {
-    display: block;
-    text-align: left;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #333;
+h2 {
+  text-align: center;
+  color: #cc6e1d;
+  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: 600;
 }
 
-#feedbackForm input,
-#feedbackForm textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #5d4037;
 }
 
-#feedbackForm button {
-    background-color: #1a237e;
-    color: white;
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ffe2c4;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #fffdf9;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
 }
 
-#feedbackForm button:hover {
-    background-color: #3949ab;
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #f7a44c;
+  outline: none;
 }
 
-#status {
-    margin-top: 1rem;
-    color: #333;
-    font-weight: 500;
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #f4a261;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+button:hover {
+  background-color: #dd843c;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 25px;
+  }
 }
