@@ -14,14 +14,16 @@ firebase.auth().onAuthStateChanged(user => {
 });
 
 function loadEvents(userId) {
-    db.collection("events").where("userId", "==", userId).get()
+    db.collection("attendance").where("userId", "==", userId).get()
         .then(snapshot => {
+            eventsList = []; // Clear before repopulating
+            document.getElementById("eventSelect").innerHTML = ""; // Clear dropdown
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const event = {
                     id: doc.id,
-                    name: data.name,
-                    date: data.date,
+                    name: data.eventname || "Unnamed",
+                    date: data.date || "No Date",
                     students: data.students || []
                 };
                 eventsList.push(event);
@@ -42,6 +44,8 @@ function addEvent() {
     const name = document.getElementById("eventName").value.trim();
     const date = document.getElementById("eventDate").value;
 
+    console.log("Adding event:", { name, date });
+
     if (!name || !date) {
         alert("Please enter both event name and date.");
         return;
@@ -54,16 +58,20 @@ function addEvent() {
     }
 
     const newEvent = {
-        name,
+        eventname: name,
         date,
         students: [],
         userId: auth.currentUser.uid
     };
 
-    db.collection("events").add(newEvent)
+    db.collection("attendance").add(newEvent)
         .then(docRef => {
-            newEvent.id = docRef.id;
-            eventsList.push(newEvent);
+            const event = {
+                ...newEvent,
+                id: docRef.id,
+                name
+            };
+            eventsList.push(event);
 
             const option = document.createElement("option");
             option.value = docRef.id;
@@ -93,7 +101,7 @@ function addStudent() {
     const newStudent = { name: studentName, batch };
     event.students.push(newStudent);
 
-    db.collection("events").doc(eventId).update({
+    db.collection("attendance").doc(eventId).update({
         students: event.students
     })
         .then(() => {
@@ -121,7 +129,7 @@ function deleteEvent(eventId) {
     }
 
     // Delete from Firestore
-    db.collection("events").doc(eventId).delete()
+    db.collection("attendance").doc(eventId).delete()
         .then(() => {
             console.log("Event deleted from Firestore:", eventId);
         })
@@ -129,7 +137,6 @@ function deleteEvent(eventId) {
             console.error("Error deleting event:", error);
         });
 
-    // Re-render the threads
     renderThreads();
 }
 
@@ -145,18 +152,20 @@ function renderThreads(filteredList = null) {
 
         const header = document.createElement("div");
         header.className = "event-header";
+        header.style.display = "flex";
+        header.style.justifyContent = "space-between";
+        header.style.alignItems = "center";
 
-        // Add text content
-        header.textContent = `${event.name} - ${event.date}`;
+        const title = document.createElement("span");
+        title.textContent = `${event.name} - ${event.date}`;
 
-        // Add delete button
         const deleteBtn = document.createElement("span");
-        deleteBtn.textContent = " 🗑️";
+        deleteBtn.innerHTML = "🗑️";
         deleteBtn.style.cursor = "pointer";
         deleteBtn.title = "Delete Event";
-        deleteBtn.style.float = "right";
         deleteBtn.onclick = () => deleteEvent(event.id);
 
+        header.appendChild(title);
         header.appendChild(deleteBtn);
 
         const studentList = document.createElement("div");
@@ -178,7 +187,7 @@ function renderThreads(filteredList = null) {
 function filterAttendance() {
     const query = document.getElementById("searchBar").value.toLowerCase();
     const filtered = eventsList.filter(e =>
-        e.name.toLowerCase().includes(query) || e.date.includes(query)
+        (e.name || "").toLowerCase().includes(query) || (e.date || "").includes(query)
     );
     renderThreads(filtered);
 }
