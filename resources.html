@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resource Hub - FCI</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="resources.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script src="resources.js" defer></script>
 </head>
-<body>
 
+<body>
     <header>
         <div class="logo">
             <img src="fci logo.jpg" alt="FCI Logo">
         </div>
         <nav class="navbar">
-                <a href="#" class="toggle-button">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </a>
-                    <div class="navbar-links">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    
                     <li><a href="scholars.html">Scholars Portal</a></li>
                     <li><a href="attendance.html">Attendance</a></li>
                     <li><a href="leaderboard.html">Leaderboard</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                </div>
-            </nav>
+            </div>
+        </nav>
     </header>
-    
 
     <section class="resource-section">
         <h2>Resource Hub</h2>
-
         <input type="text" id="searchBar" placeholder="Search resources..." onkeyup="filterResources()">
 
         <div class="categories">
@@ -46,43 +48,35 @@
             <button onclick="filterCategory('guidelines')">Guidelines</button>
         </div>
 
-        <div class="resource-list">
-            <div class="resource-item" data-category="files">
-                <h3>Cybersecurity Guide</h3>
-                <p>A complete guide on cybersecurity best practices.</p>
-                <a href="assets/resources/cybersecurity-guide.pdf" download>Download</a>
-            </div>
+        <button class="add-resource-btn" onclick="openModal()">+ Add Resource</button>
 
-            <div class="resource-item" data-category="videos">
-                <h3>Machine Learning Basics</h3>
-                <p>Introductory video tutorial on machine learning.</p>
-                <a href="https://www.youtube.com/watch?v=Gv9_4yMHFhI" target="_blank">Watch</a>
-            </div>
-
-            <div class="resource-item" data-category="guidelines">
-                <h3>Research Paper Formatting</h3>
-                <p>Guidelines on writing and formatting research papers.</p>
-                <a href="assets/resources/research-guidelines.pdf" download>Download</a>
-            </div>
-
-            <div class="resource-item" data-category="files">
-                <h3>Python Cheat Sheet</h3>
-                <p>A handy Python programming cheat sheet.</p>
-                <a href="assets/resources/python-cheatsheet.pdf" download>Download</a>
-            </div>
-        </div>
+        <div class="resource-list" id="resourceList"></div>
     </section>
+
+    <div id="resourceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Add New Resource</h3>
+            <form id="resourceForm">
+                <input type="text" id="title" placeholder="Title" required><br>
+                <textarea id="description" placeholder="Description" required></textarea><br>
+                <select id="category" required onchange="toggleUploadMode()">
+                    <option value="">Select Category</option>
+                    <option value="files">Downloadable File</option>
+                    <option value="videos">Video Tutorial</option>
+                    <option value="guidelines">Guideline</option>
+                </select><br>
+                <div id="uploadSection">
+                    <!-- file input or video link dynamically inserted here -->
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2025 FCI. All rights reserved.</p>
     </footer>
-    <script>
-        const toggleButton = document.getElementsByClassName('toggle-button')[0];
-            const navbarLinks = document.getElementsByClassName('navbar-links')[0];
-            
-            toggleButton.addEventListener('click', () => {
-                navbarLinks.classList.toggle('active');
-            });
-        </script>  
 </body>
+
 </html>
