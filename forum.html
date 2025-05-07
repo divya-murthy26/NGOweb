@@ -1,80 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Discussion Forum - FCI</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="forum.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="forum.css" />
+
+    <!-- Firebase v8 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="forum.js" defer></script>
 </head>
-<body>
 
+<body>
     <header>
-        <div class="logo">
-            <img src="fci logo.jpg" alt="FCI Logo">
-        </div>
+        <div class="logo"><img src="fci logo.jpg" alt="FCI Logo"></div>
         <nav class="navbar">
-                <a href="#" class="toggle-button">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </a>
-                    <div class="navbar-links">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </a>
+            <div class="navbar-links">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    
                     <li><a href="scholars.html">Scholars Portal</a></li>
                     <li><a href="attendance.html">Attendance</a></li>
                     <li><a href="leaderboard.html">Leaderboard</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                </div>
-            </nav>
+            </div>
+        </nav>
     </header>
-    
 
     <section class="forum-section">
         <h2>Discussion Forum</h2>
 
-        <div class="login">
-            <div class="login">
-                <input type="text" id="username" placeholder="Enter your name">
-                <select id="role">
-                    <option value="mentee">Mentee</option>
-                    <option value="mentor">Mentor</option>
-                </select>
-                <button onclick="login()">Login</button>
-            </div>
-            
-        </div>
-
         <div class="post-question">
-            <select id="category">
-                <option value="general">General</option>
-                <option value="event">Event-Specific</option>
-                <option value="feedback">Feedback</option>
-                <option value="suggestion">Suggestions</option>
-            </select>
             <textarea id="question" placeholder="Ask a question..."></textarea>
             <button onclick="postQuestion()">Post</button>
         </div>
 
-        <div id="forum-posts">
-            <!-- Questions will be dynamically added here -->
-        </div>
+        <div id="forum-posts"></div>
     </section>
 
     <footer>
         <p>&copy; 2025 FCI. All rights reserved.</p>
     </footer>
+
     <script>
         const toggleButton = document.getElementsByClassName('toggle-button')[0];
-            const navbarLinks = document.getElementsByClassName('navbar-links')[0];
-            
-            toggleButton.addEventListener('click', () => {
-                navbarLinks.classList.toggle('active');
-            });
-        </script>  
+        const navbarLinks = document.getElementsByClassName('navbar-links')[0];
+        toggleButton.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+    </script>
 </body>
+
 </html>
