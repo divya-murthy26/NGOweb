@@ -7,31 +7,39 @@ const firebaseConfig = {
   messagingSenderId: "1026364980448",
   appId: "1:1026364980448:web:f8f0d91949dcb79e976485"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
 let currentUserName = null;
+let currentUserId = null;
 
 auth.onAuthStateChanged(user => {
   if (user) {
-    if (user.displayName) {
-      currentUserName = user.displayName;
-    } else if (user.email) {
-      currentUserName = user.email.split('@')[0];
-    } else {
-      currentUserName = "Anonymous";
-    }
-    fetchQuestions();
+    currentUserId = user.uid;
+    db.collection("users").doc(user.uid).get().then(doc => {
+      if (doc.exists && doc.data().firstName) {
+        currentUserName = doc.data().firstName;
+      } else if (user.displayName) {
+        currentUserName = user.displayName;
+      } else if (user.email) {
+        currentUserName = user.email.split('@')[0];
+      } else {
+        currentUserName = "Anonymous";
+      }
+      fetchQuestions();
+    });
   }
 });
 
 function postQuestion() {
   const question = document.getElementById("question").value.trim();
-  if (!question || !currentUserName) return;
+  if (!question || !currentUserName || !currentUserId) return;
 
   db.collection("forumQuestions").add({
     username: currentUserName,
+    userId: currentUserId,
     questionText: question,
     date: new Date().toISOString(),
     replies: []
@@ -62,9 +70,12 @@ function postReply(qid, replyTextEl) {
 function fetchQuestions() {
   const forumPosts = document.getElementById("forum-posts");
   forumPosts.innerHTML = "";
+
   db.collection("forumQuestions").orderBy("date", "desc").get().then(snapshot => {
     snapshot.forEach(doc => {
       const q = doc.data();
+      const isOwnPost = q.userId === currentUserId;
+
       const div = document.createElement("div");
       div.className = "question-block";
       div.innerHTML = `
@@ -79,10 +90,11 @@ function fetchQuestions() {
             </div>
           `).join('')}
         </div>
-        <div class="reply-input">
-          <input type="text" placeholder="Your reply..." class="reply-text">
-          <button onclick="postReply('${doc.id}', this.previousElementSibling)">Reply</button>
-        </div>
+        ${!isOwnPost ? `
+          <div class="reply-input">
+            <input type="text" placeholder="Your reply..." class="reply-text">
+            <button onclick="postReply('${doc.id}', this.previousElementSibling)">Reply</button>
+          </div>` : ''}
       `;
       forumPosts.appendChild(div);
     });
