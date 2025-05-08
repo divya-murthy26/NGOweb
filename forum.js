@@ -1,4 +1,4 @@
-// Firebase Config (replace with your project credentials)
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyDWwikVGl6oHrCsAIWA9L3facXPcwAMk9c",
   authDomain: "fci-auth.firebaseapp.com",
@@ -8,15 +8,20 @@ const firebaseConfig = {
   appId: "1:1026364980448:web:f8f0d91949dcb79e976485"
 };
 firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-var auth = firebase.auth();
+const db = firebase.firestore();
+const auth = firebase.auth();
 
 let currentUserName = null;
 
-// Get signed-in user's name (no redirect, as user is already signed in)
 auth.onAuthStateChanged(user => {
   if (user) {
-    currentUserName = user.displayName || user.email.split('@')[0];
+    if (user.displayName) {
+      currentUserName = user.displayName;
+    } else if (user.email) {
+      currentUserName = user.email.split('@')[0];
+    } else {
+      currentUserName = "Anonymous";
+    }
     fetchQuestions();
   }
 });
