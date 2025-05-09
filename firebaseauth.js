@@ -108,10 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          localStorage.setItem('loggedInUserId', user.uid);
+          localStorage.setItem('loggedInUserId', user.uid); // Save UID
           showMessage('Login is successful', 'signInMessage');
           setTimeout(() => {
-            window.location.href = 'details.html';
+            window.location.href = 'details.html'; // Redirect after login
           }, 1000);
 
           // Clear the form
