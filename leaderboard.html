@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="leaderboard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-    <!-- Firebase v11 (modular) - don't need to load SDKs in HTML -->
     <script type="module" src="leaderboard.js"></script>
 </head>
 
@@ -50,6 +48,15 @@
             </tbody>
         </table>
         <button onclick="downloadLeaderboard()">Download Leaderboard</button>
+    </section>
+
+    <section class="update-score-section">
+        <h3>Update Participant Score</h3>
+        <form id="updateScoreForm">
+            <input type="text" id="participantName" placeholder="Participant Name" required />
+            <input type="number" id="additionalScore" placeholder="Additional Score" required />
+            <button type="submit">Update Score</button>
+        </form>
     </section>
 
     <footer class="footer">

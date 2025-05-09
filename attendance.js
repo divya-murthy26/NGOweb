@@ -6,25 +6,12 @@ const auth = firebase.auth();
 // Load all events once user is authenticated
 auth.onAuthStateChanged(user => {
     if (user) {
-        initializeLeaderboard(user.uid);
         loadEvents();
     } else {
         alert("Please log in to use the attendance system.");
         window.location.href = "index.html";
     }
 });
-
-function initializeLeaderboard(userId) {
-    const leaderboardRef = db.collection("leaderboard").doc(userId);
-    leaderboardRef.get().then(doc => {
-        if (!doc.exists) {
-            leaderboardRef.set({
-                score: 0,
-                badge: "Beginner"
-            });
-        }
-    });
-}
 
 function loadEvents() {
     db.collection("attendance").get()
@@ -110,29 +97,10 @@ function addStudent() {
         .then(() => {
             document.getElementById("studentName").value = "";
             renderThreads();
-            updateLeaderboardScore(auth.currentUser.uid);
         })
         .catch(error => {
             console.error("Error updating students:", error);
         });
-}
-
-function updateLeaderboardScore(userId) {
-    let totalStudents = 0;
-    eventsList.forEach(event => {
-        totalStudents += event.students.length;
-    });
-
-    let badge = "Beginner";
-    if (totalStudents >= 30) badge = "Gold";
-    else if (totalStudents >= 20) badge = "Silver";
-    else if (totalStudents >= 10) badge = "Bronze";
-    else if (totalStudents >= 1) badge = "Contributor";
-
-    db.collection("leaderboard").doc(userId).set({
-        score: totalStudents,
-        badge
-    });
 }
 
 function deleteEvent(eventId) {
@@ -149,7 +117,6 @@ function deleteEvent(eventId) {
     db.collection("attendance").doc(eventId).delete()
         .then(() => {
             console.log("Event deleted from Firestore:", eventId);
-            updateLeaderboardScore(auth.currentUser.uid);
             loadEvents(); // refresh everything after delete
         })
         .catch((error) => {
