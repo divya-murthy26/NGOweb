@@ -15,24 +15,32 @@ const auth = firebase.auth();
 let currentUserName = null;
 let currentUserId = null;
 
+// Authenticate user and set firstName if not set already
 auth.onAuthStateChanged(user => {
   if (user) {
     currentUserId = user.uid;
+
+    // Check if the user already has firstName in Firestore
     db.collection("users").doc(user.uid).get().then(doc => {
       if (doc.exists && doc.data().firstName) {
+        // If firstName is already set, use it
         currentUserName = doc.data().firstName;
-      } else if (user.displayName) {
-        currentUserName = user.displayName;
-      } else if (user.email) {
-        currentUserName = user.email.split('@')[0];
       } else {
-        currentUserName = "Anonymous";
+        // If firstName is not set, use email prefix or set to "Anonymous"
+        currentUserName = user.email ? user.email.split('@')[0] : "Anonymous";
+
+        // Optionally, you can update the user's firstName in Firestore
+        // if the firstName is missing. Uncomment the code below if you'd like
+        db.collection("users").doc(user.uid).set({
+          firstName: currentUserName, // Use the email prefix as a first name
+        }, { merge: true });
       }
-      fetchQuestions();
+      fetchQuestions(); // Fetch questions once the username is set
     });
   }
 });
 
+// Post a new question to Firestore
 function postQuestion() {
   const question = document.getElementById("question").value.trim();
   if (!question || !currentUserName || !currentUserId) return;
@@ -45,10 +53,11 @@ function postQuestion() {
     replies: []
   }).then(() => {
     document.getElementById("question").value = "";
-    fetchQuestions();
+    fetchQuestions(); // Refresh questions after posting
   });
 }
 
+// Post a reply to a question
 function postReply(qid, replyTextEl) {
   const replyText = replyTextEl.value.trim();
   if (!replyText || !currentUserName) return;
@@ -63,13 +72,28 @@ function postReply(qid, replyTextEl) {
     replies: firebase.firestore.FieldValue.arrayUnion(reply)
   }).then(() => {
     replyTextEl.value = "";
-    fetchQuestions();
+    fetchQuestions(); // Refresh questions after posting reply
   });
 }
 
+// Delete a question
+function deleteQuestion(qid) {
+  if (!confirm("Are you sure you want to delete this question?")) return;
+
+  db.collection("forumQuestions").doc(qid).delete()
+    .then(() => {
+      console.log("Question deleted");
+      fetchQuestions(); // Refresh questions after deleting
+    })
+    .catch((error) => {
+      console.error("Error deleting question:", error);
+    });
+}
+
+// Fetch and display all questions
 function fetchQuestions() {
   const forumPosts = document.getElementById("forum-posts");
-  forumPosts.innerHTML = "";
+  forumPosts.innerHTML = ""; // Clear previous questions
 
   db.collection("forumQuestions").orderBy("date", "desc").get().then(snapshot => {
     snapshot.forEach(doc => {
@@ -90,10 +114,16 @@ function fetchQuestions() {
             </div>
           `).join('')}
         </div>
-        ${!isOwnPost ? `
+        ${!isOwnPost ? `  
           <div class="reply-input">
             <input type="text" placeholder="Your reply..." class="reply-text">
             <button onclick="postReply('${doc.id}', this.previousElementSibling)">Reply</button>
+          </div>` : ''}
+        ${isOwnPost ? `
+          <div class="delete-icon">
+            <button onclick="deleteQuestion('${doc.id}')">
+              <i class="fas fa-trash-alt"></i>
+            </button>
           </div>` : ''}
       `;
       forumPosts.appendChild(div);
