@@ -19,8 +19,12 @@ const firebaseConfig = {
   appId: "1:1026364980448:web:f8f0d91949dcb79e976485"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
+// Function to display messages with fade-out effect
 function showMessage(message, divId) {
   const messageDiv = document.getElementById(divId);
   if (!messageDiv) return;
@@ -34,67 +38,98 @@ function showMessage(message, divId) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const signUp = document.getElementById("submitSignUp");
-  if (!signUp) return;
+  if (signUp) {
+    signUp.addEventListener("click", async (event) => {
+      event.preventDefault();
 
-  signUp.addEventListener("click", async (event) => {
-    event.preventDefault();
+      const email = document.getElementById("rEmail").value;
+      const password = document.getElementById("rPassword").value;
+      const firstName = document.getElementById("fName").value;
+      const lastName = document.getElementById("lName").value;
 
-    const email = document.getElementById("rEmail").value;
-    const password = document.getElementById("rPassword").value;
-    const firstName = document.getElementById("fName").value;
-    const lastName = document.getElementById("lName").value;
-
-    const auth = getAuth();
-    const db = getFirestore();
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        email: email,
-        firstName: firstName,
-        lastName: lastName
-      });
-
-      showMessage("Account created successfully!", "signUpMessage");
-      setTimeout(() => {
-        window.location.href = "signin.html"; // ✅ fixed typo
-      }, 1000);
-
-    } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        showMessage("Email already exists!", "signUpMessage");
-      } else {
-        console.error("Firebase Auth Error:", error);
-        showMessage("Unable to create user", "signUpMessage");
+      if (!email || !password || !firstName || !lastName) {
+        showMessage("All fields are required!", "signUpMessage");
+        return;
       }
-    }
-  });
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Store user profile
+        await setDoc(doc(db, "users", user.uid), {
+          email,
+          firstName,
+          lastName
+        });
+
+        // Initialize leaderboard
+        await setDoc(doc(db, "leaderboard", user.uid), {
+          score: 0,
+          badge: "Beginner",
+          firstName: firstName
+        });
+
+        showMessage("Account created successfully!", "signUpMessage");
+        setTimeout(() => {
+          window.location.href = "signin.html";
+        }, 1000);
+
+        // Clear the form
+        document.getElementById("rEmail").value = '';
+        document.getElementById("rPassword").value = '';
+        document.getElementById("fName").value = '';
+        document.getElementById("lName").value = '';
+
+      } catch (error) {
+        if (error.code === "auth/email-already-in-use") {
+          showMessage("Email already exists!", "signUpMessage");
+        } else {
+          console.error("Firebase Auth Error:", error);
+          showMessage("Unable to create user", "signUpMessage");
+        }
+      }
+    });
+  }
+
+  const signIn = document.getElementById('submitSignIn');
+  if (signIn) {
+    signIn.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        showMessage("Both fields are required!", "signInMessage");
+        return;
+      }
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          localStorage.setItem('loggedInUserId', user.uid);
+          showMessage('Login is successful', 'signInMessage');
+          setTimeout(() => {
+            window.location.href = 'details.html';
+          }, 1000);
+
+          // Clear the form
+          document.getElementById("email").value = '';
+          document.getElementById("password").value = '';
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          if (errorCode === 'auth/invalid-credential') {
+            showMessage("Incorrect Email or Password", "signInMessage");
+          } else if (errorCode === 'auth/user-not-found') {
+            showMessage("No account found with this email", 'signInMessage');
+          } else {
+            console.error("Firebase Auth Error:", error);
+            showMessage("Something went wrong. Please try again.", 'signInMessage');
+          }
+        });
+    });
+  }
 });
-
-const signIn =document.getElementById('submitSignIn');
-signIn.addEventListener('click', (event)=>{
-  event.preventDefault();
-    const email=document.getElementById("email").value;
-  const password= document.getElementById("password").value;
-  const auth= getAuth();
-
-  signInWithEmailAndPassword(auth,email,password)
-  .then((userCredential)=>{
-    showMessage('login is successful','signInMessage');
-    const user=userCredential.user;
-    localStorage.setItem('loggedInUserId', user.uid);
-    window.location.href='details.html';
-  })
-  .catch((error)=>{
-    const errorCode=error.code;
-    if(errorCode==='auth/invalid-credential'){
-      showMessage("Incorrect Email or Password","signInMessage");
-    }else{
-      showMessage("Account does not Exhist",'signInMessage');
-    }
-  })
-  
-})
-

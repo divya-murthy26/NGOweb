@@ -4,20 +4,33 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // Load existing events once user is authenticated
-firebase.auth().onAuthStateChanged(user => {
+auth.onAuthStateChanged(user => {
     if (user) {
+        initializeLeaderboard(user.uid); // Initialize leaderboard if not present
         loadEvents(user.uid);
     } else {
         alert("Please log in to use the attendance system.");
-        window.location.href = "index.html"; // redirect if not logged in
+        window.location.href = "index.html";
     }
 });
+
+function initializeLeaderboard(userId) {
+    const leaderboardRef = db.collection("leaderboard").doc(userId);
+    leaderboardRef.get().then(doc => {
+        if (!doc.exists) {
+            leaderboardRef.set({
+                score: 0,
+                badge: "Beginner"
+            });
+        }
+    });
+}
 
 function loadEvents(userId) {
     db.collection("attendance").where("userId", "==", userId).get()
         .then(snapshot => {
-            eventsList = []; // Clear before repopulating
-            document.getElementById("eventSelect").innerHTML = ""; // Clear dropdown
+            eventsList = [];
+            document.getElementById("eventSelect").innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const event = {
@@ -44,8 +57,6 @@ function addEvent() {
     const name = document.getElementById("eventName").value.trim();
     const date = document.getElementById("eventDate").value;
 
-    console.log("Adding event:", { name, date });
-
     if (!name || !date) {
         alert("Please enter both event name and date.");
         return;
@@ -66,11 +77,7 @@ function addEvent() {
 
     db.collection("attendance").add(newEvent)
         .then(docRef => {
-            const event = {
-                ...newEvent,
-                id: docRef.id,
-                name
-            };
+            const event = { ...newEvent, id: docRef.id, name };
             eventsList.push(event);
 
             const option = document.createElement("option");
@@ -107,19 +114,36 @@ function addStudent() {
         .then(() => {
             document.getElementById("studentName").value = "";
             renderThreads();
+            updateLeaderboardScore(auth.currentUser.uid);
         })
         .catch(error => {
             console.error("Error updating students:", error);
         });
 }
 
+function updateLeaderboardScore(userId) {
+    let totalStudents = 0;
+    eventsList.forEach(event => {
+        totalStudents += event.students.length;
+    });
+
+    let badge = "Beginner";
+    if (totalStudents >= 30) badge = "Gold";
+    else if (totalStudents >= 20) badge = "Silver";
+    else if (totalStudents >= 10) badge = "Bronze";
+    else if (totalStudents >= 1) badge = "Contributor";
+
+    db.collection("leaderboard").doc(userId).set({
+        score: totalStudents,
+        badge
+    });
+}
+
 function deleteEvent(eventId) {
     if (!confirm("Are you sure you want to delete this event?")) return;
 
-    // Remove from local list
     eventsList = eventsList.filter(event => event.id !== eventId);
 
-    // Remove from dropdown
     const select = document.getElementById("eventSelect");
     for (let i = 0; i < select.options.length; i++) {
         if (select.options[i].value === eventId) {
@@ -128,16 +152,15 @@ function deleteEvent(eventId) {
         }
     }
 
-    // Delete from Firestore
     db.collection("attendance").doc(eventId).delete()
         .then(() => {
             console.log("Event deleted from Firestore:", eventId);
+            updateLeaderboardScore(auth.currentUser.uid);
+            renderThreads();
         })
         .catch((error) => {
             console.error("Error deleting event:", error);
         });
-
-    renderThreads();
 }
 
 function renderThreads(filteredList = null) {

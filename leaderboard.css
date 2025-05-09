@@ -14,7 +14,8 @@ table {
     margin-top: 10px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
@@ -24,10 +25,6 @@ th {
     background: #ff6600;
     color: white;
 }
-
-tr:nth-child(1) { background: #ffcc00; }  /* Gold */
-tr:nth-child(2) { background: #c0c0c0; }  /* Silver */
-tr:nth-child(3) { background: #cd7f32; }  /* Bronze */
 
 button {
     margin-top: 15px;
