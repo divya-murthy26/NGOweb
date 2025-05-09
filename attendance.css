@@ -1,6 +1,8 @@
 .attendance-section {
     max-width: 900px;
-    margin: 20px auto;
+    
+    margin: 50px auto;
+    margin-bottom: 90px;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -63,4 +65,89 @@ button {
     font-size: 18px;
     color: red;
     margin-left: 10px;
+}
+.footer {
+  background-color: #222;
+  padding: 10px 20px; /* Reduced from 20px 20px 20px */
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1 1 150px;
+}
+
+.footer-section h3 {
+  margin-bottom: 10px; /* Reduced for compact spacing */
+  font-size: 1.2em;
+  color: rgb(235, 225, 225);
+}
+
+.footer-section p, 
+.footer-section a {
+  margin: 4px 0; /* Slightly reduced */
+  color: #ddd5d5;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+.footer-section a:hover {
+  color: #007BFF;
+}
+
+.social-icons {
+  /* Added to ensure layout */
+  gap: 15px;
+  margin-top: 5px; /* Reduced from 10px */
+}
+
+.social-icons a {
+    padding-top: 20px;
+  font-size: 1.5em;
+  color: #767373;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #007BFF;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 10px; /* Reduced from 20px */
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* Responsive for small screens */ 
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    max-width: 100%;
+  }
+}
+
+/* Icon colors */
+#facebook {
+  color: #1877F2;
+} 
+#instagram {
+  color: #E4405F;
+}
+#youtube {
+  color: #d81c1c;
 }

@@ -27,7 +27,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="signin.html">Sign In</a></li>
                     <li><a href="contact.html" class="active">Contact</a></li>
-                    <li><a href="report.html" class="active">Report Issue</a></li>
+                   
                 </ul>
             </div>
         </nav>
@@ -35,13 +35,14 @@
 
     <section id="contact" class="contact-section">
         <div class="contact-container">
-            <h2>Get in Touch</h2>
-            <p>We'd love to hear from you! Fill out the form below and we'll get back to you as soon as possible.</p>
+            <h2>Report an Issue</h2>
+            <p>Encountered a problem? Let us know the details below and we'll work on resolving it as soon as possible..</p>
 
             <form id="contactForm">
                 <input type="text" id="name" name="name" placeholder="Your Name" required />
                 <input type="email" id="email" name="email" placeholder="Your Email" required />
-                <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                <input type="text" id="issue-name" name="Issue Name" placeholder="Short title of the issue" required>
+      <textarea id="description" name="Description" rows="6" placeholder="Please describe the issue in detail..." required></textarea>
                 <button type="submit">Send Message</button>
                 <p id="status"></p>
             </form>
