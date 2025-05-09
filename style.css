@@ -225,5 +225,88 @@ footer {
   text-align: center;
   background: #222;
   color: white;
-  padding: 15px;
+  padding: 10px;
+}
+/* Add this in your CSS file */
+.footer {
+  background-color: #222;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1 1 150px;
+}
+
+.footer-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  color:rgb(235, 225, 225);
+}
+
+.footer-section p, 
+.footer-section a {
+  margin: 5px 0;
+  color: #ddd5d5;
+  text-decoration: none;
+  font-size: 0.95em;
+}
+
+.footer-section a:hover {
+  color: #007BFF;
+}
+
+.social-icons {
+
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  font-size: 1.5em;
+  color: #767373;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #007BFF;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 0.85em;
+  color: #777;
+}
+
+/* Responsive for small screens*/ 
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section {
+    max-width: 100%;
+  }
+}
+#facebook{
+ color: #1877F2;
+} 
+#instagram{
+  color:#E4405F;
+}
+#youtube{
+  color:#d81c1c;
 }
