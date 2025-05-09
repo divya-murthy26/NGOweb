@@ -82,6 +82,7 @@ button:hover {
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
+    width: 300px;
 }
 
 .event-popup input {
@@ -126,4 +127,27 @@ button:hover {
     color: white;
     font-size: 14px;
     padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+}
+.event-details li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-details button {
+    background: #ff4444;
+    color: white;
+    font-size: 14px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.event-details button:hover {
+    background: #cc0000;
 }
