@@ -1,6 +1,13 @@
-.leaderboard-section {
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.leaderboard-section,
+.update-score-section {
     max-width: 800px;
-    margin: 50px auto 30px auto;
+    margin: 30px auto;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -8,14 +15,9 @@
     text-align: center;
 }
 
-.update-score-section {
-    max-width: 800px;
-    margin: 0 auto 80px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+.table-container {
+    overflow-x: auto;
+    margin-top: 15px;
 }
 
 .update-score-section h3 {
@@ -32,14 +34,15 @@
 .update-score-section input {
     padding: 10px;
     margin: 8px 0;
-    width: 70%;
+    width: 100%;
     max-width: 400px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
 }
 
-.update-score-section button {
+.update-score-section button,
+button {
     margin-top: 12px;
     padding: 10px 20px;
     background-color: #ff6600;
@@ -50,14 +53,14 @@
     font-size: 16px;
 }
 
-.update-score-section button:hover {
+button:hover {
     background-color: #e65c00;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    min-width: 500px;
 }
 
 th,
@@ -72,12 +75,42 @@ th {
     color: white;
 }
 
-button {
-    margin-top: 15px;
-    padding: 10px 15px;
-    background: #ff6600;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+/* Responsive styles */
+@media (max-width: 768px) {
+
+    .leaderboard-section,
+    .update-score-section {
+        padding: 15px;
+    }
+
+    .update-score-section input {
+        width: 90%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-links ul {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .navbar-links ul li {
+        padding: 10px 0;
+    }
+
+    .toggle-button {
+        display: block;
+    }
+
+    .navbar-links.active {
+        display: block;
+    }
+
+    .logo img {
+        width: 100px;
+    }
 }

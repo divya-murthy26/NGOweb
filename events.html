@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Interactive Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="calendar.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-    <!-- Firebase Config -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDWwikVGl6oHrCsAIWA9L3facXPcwAMk9c",
@@ -22,8 +22,6 @@
             appId: "1:1026364980448:web:f8f0d91949dcb79e976485"
         };
 
-
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
@@ -31,98 +29,99 @@
 </head>
 
 <body>
-     <header>
+    <header>
         <div class="logo">
             <img src="fci logo.jpg" alt="FCI Logo">
         </div>
         <nav class="navbar">
-                <a href="#" class="toggle-button">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </a>
-                    <div class="navbar-links">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="index.html">Sign Out</a></li>
-                   
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                </div>
-            </nav>
-    </header>
-    
-    <div class="calendar-container">
-        <div class="calendar-header">
-            <button id="prevMonth">&#8592;</button>
-            <h2 id="currentMonth"></h2>
-            <button id="nextMonth">&#8594;</button>
-        </div>
-
-        <div class="calendar">
-            <div class="days-of-week">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
             </div>
-            <div class="calendar-days" id="calendarDays"></div>
+        </nav>
+    </header>
+
+    <main> <!-- Main content wrapper to ensure footer sticks to the bottom -->
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button id="prevMonth">&#8592;</button>
+                <h2 id="currentMonth"></h2>
+                <button id="nextMonth">&#8594;</button>
+            </div>
+
+            <div class="calendar">
+                <div class="days-of-week">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="calendar-days" id="calendarDays"></div>
+            </div>
         </div>
-    </div>
 
-    <!-- Event Popup -->
-    <div class="event-popup" id="eventPopup" style="display: none;">
-        <h3>Add Event</h3>
-        <input type="text" id="eventTitle" placeholder="Event Title" />
-        <input type="date" id="eventDate" />
-        <div class="popup-buttons">
-            <button id="saveEvent">Save</button>
-            <button id="cancelEvent">Cancel</button>
+        <div class="event-popup" id="eventPopup">
+            <h3>Add Event</h3>
+            <input type="text" id="eventTitle" placeholder="Event Title" />
+            <input type="date" id="eventDate" />
+            <div class="popup-buttons">
+                <button id="saveEvent">Save</button>
+                <button id="cancelEvent">Cancel</button>
+            </div>
         </div>
-    </div>
 
-    <!-- Scheduled Events -->
-    <div class="event-details">
-        <h3>Scheduled Events</h3>
-        <ul id="eventList"></ul>
-    </div>
+        <div class="event-details">
+            <h3>Scheduled Events</h3>
+            <ul id="eventList"></ul>
+        </div>
+    </main> <!-- End of main content wrapper -->
 
-   <footer class="footer">
-  <div class="footer-container">
-    <div class="footer-section">
-      <h3>Office Address</h3>
-      <p>#21, 3rd Cross,</p>
-      <p>Ashraya Layout, Stage 1,</p>
-      <p>Mahadevpura,</p>
-      <p>Bangalore 560 048</p>
-    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Office Address</h3>
+                <p>#21, 3rd Cross,</p>
+                <p>Ashraya Layout, Stage 1,</p>
+                <p>Mahadevpura,</p>
+                <p>Bangalore 560 048</p>
+            </div>
 
-    <div class="footer-section">
-      <h3>Contact Us</h3>
-      <p>📞 Phone: <a href="tel:+919845277768">+91 98452 77768</a></p>
-      <p>📧 Email: <a href="mailto:fundachildinindia@gmail.com">fundachildinindia@gmail.com</a></p>
-    </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>📞 <a href="tel:+919845277768">+91 98452 77768</a></p>
+                <p>📧 <a href="mailto:fundachildinindia@gmail.com">fundachildinindia@gmail.com</a></p>
+            </div>
 
-    <div class="footer-section">
-      <h3>Follow Us</h3>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/FundachildinIndia" id="facebook"><i class="fab fa-facebook-f"></i></a>
-       
-        <a href="https://www.instagram.com/fundachildinindia/"id="instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.linkedin.com/groups/10483541/"id="linkedin" ><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://www.youtube.com/channel/UCaBfTwLkKueeAfQReF8zdrA"id="youtube"><i class="fab fa-youtube"></i></a>      
-</div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2025 FundaChild India. All rights reserved.</p>
-  </div>
-</footer>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/FundachildinIndia" id="facebook"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/fundachildinindia/" id="instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/groups/10483541/" id="linkedin"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/channel/UCaBfTwLkKueeAfQReF8zdrA" id="youtube"><i
+                            class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FundaChild India. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <!-- Calendar Logic -->
     <script src="calendar.js"></script>
 </body>
 

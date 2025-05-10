@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="leaderboard.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <script type="module" src="leaderboard.js"></script>
+    <script type="module" src="leaderboard.js" defer></script>
 </head>
 
 <body>
@@ -34,19 +34,21 @@
 
     <section class="leaderboard-section">
         <h2>FCI Leaderboard</h2>
-        <table id="leaderboardTable">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Participant</th>
-                    <th>Engagement Score</th>
-                    <th>Badge</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboardBody">
-                <!-- Filled by JS -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="leaderboardTable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Participant</th>
+                        <th>Engagement Score</th>
+                        <th>Badge</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Filled by JS -->
+                </tbody>
+            </table>
+        </div>
         <button onclick="downloadLeaderboard()">Download Leaderboard</button>
     </section>
 
@@ -93,8 +95,8 @@
     </footer>
 
     <script>
-        const toggleButton = document.getElementsByClassName("toggle-button")[0];
-        const navbarLinks = document.getElementsByClassName("navbar-links")[0];
+        const toggleButton = document.querySelector(".toggle-button");
+        const navbarLinks = document.querySelector(".navbar-links");
         toggleButton.addEventListener("click", () => {
             navbarLinks.classList.toggle("active");
         });
