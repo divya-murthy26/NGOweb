@@ -25,16 +25,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Badge assignment
-function getBadge(score) {
-  if (score >= 90) return "Gold Champion";
-  else if (score >= 80) return "Silver Star";
-  else if (score >= 70) return "Bronze Achiever";
-  else if (score >= 60) return "Active Learner";
-  else return "Contributor";
-}
-
-// Load leaderboard
+// Load and render leaderboard, and persist badges
 async function loadLeaderboard() {
   const tbody = document.getElementById("leaderboardBody");
   tbody.innerHTML = "";
@@ -44,102 +35,133 @@ async function loadLeaderboard() {
     const seenNames = new Set();
     let users = [];
 
-    snapshot.forEach((doc) => {
-      const data = doc.data();
+    // 1) Collect users, ensure score exists
+    for (const docSnap of snapshot.docs) {
+      const data = docSnap.data();
+      const id = docSnap.id;
+      const userRef = doc(db, "users", id);
+
+      // Determine display name
       let name = data.firstName?.trim();
       if (!name && data.email) {
         name = data.email.split("@")[0].trim();
       }
-
       if (!name || name.toLowerCase() === "anonymous" || seenNames.has(name.toLowerCase())) {
-        return;
+        continue;
       }
-
       seenNames.add(name.toLowerCase());
 
-      users.push({
-        name: name,
-        score: data.score || 0
-      });
-    });
+      // Initialize missing score
+      let score = typeof data.score === "number" ? data.score : 0;
+      if (typeof data.score !== "number") {
+        await updateDoc(userRef, { score: 0 });
+      }
 
+      users.push({ id, name, score, ref: userRef });
+    }
+
+    // 2) Sort by score descending
     users.sort((a, b) => b.score - a.score);
 
-    users.forEach((user, index) => {
+    // 3) Assign badges by rank & score
+    users.forEach((u, idx) => {
+      let badge;
+      if (idx === 0) badge = "Gold Champion";
+      else if (idx === 1) badge = "Silver Star";
+      else if (idx === 2) badge = "Bronze Achiever";
+      else if (u.score > 0) badge = "Active Participant";
+      else badge = "Contributor";
+      u.badge = badge;
+    });
+
+    // 4) Persist badge changes in Firestore
+    for (const u of users) {
+      // only update if badge field is different or missing
+      const currentBadge = (await u.ref.get()).data()?.badge;
+      if (currentBadge !== u.badge) {
+        await updateDoc(u.ref, { badge: u.badge });
+      }
+    }
+
+    // 5) Render table rows
+    users.forEach((u, idx) => {
       const tr = document.createElement("tr");
-      if (index === 0) tr.style.background = "#ffcc00";
-      else if (index === 1) tr.style.background = "#c0c0c0";
-      else if (index === 2) tr.style.background = "#cd7f32";
+      if (idx === 0) tr.style.background = "#ffcc00";
+      else if (idx === 1) tr.style.background = "#c0c0c0";
+      else if (idx === 2) tr.style.background = "#cd7f32";
 
       tr.innerHTML = `
-        <td>${index < 3 ? ["🥇", "🥈", "🥉"][index] : index + 1}</td>
-        <td>${user.name}</td>
-        <td>${user.score}</td>
-        <td>${getBadge(user.score)}</td>
+        <td>${idx < 3 ? ["🥇", "🥈", "🥉"][idx] : idx + 1}</td>
+        <td>${u.name}</td>
+        <td>${u.score}</td>
+        <td>${u.badge}</td>
       `;
       tbody.appendChild(tr);
     });
   } catch (error) {
-    console.error("Error fetching leaderboard:", error);
+    console.error("Error loading leaderboard:", error);
   }
 }
 
 // Download leaderboard as CSV
 function downloadLeaderboard() {
   const table = document.getElementById("leaderboardTable");
-  let csv = [];
+  const csv = Array.from(table.rows)
+    .map(row => Array.from(row.cells).map(cell => cell.innerText).join(","))
+    .join("\n");
 
-  for (let i = 0; i < table.rows.length; i++) {
-    let row = [], cols = table.rows[i].cells;
-    for (let j = 0; j < cols.length; j++) {
-      row.push(cols[j].innerText);
-    }
-    csv.push(row.join(","));
-  }
-
-  let csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
-  let downloadLink = document.createElement("a");
-  downloadLink.download = "Leaderboard_Report.csv";
-  downloadLink.href = window.URL.createObjectURL(csvFile);
-  downloadLink.style.display = "none";
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
+  const blob = new Blob([csv], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Leaderboard_Report.csv";
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
 }
 
-// Update participant score
+// Update participant score (and then reload + badge–persist)
 document.getElementById("updateScoreForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const nameInput = document.getElementById("participantName").value.trim();
-  const additionalScore = parseInt(document.getElementById("additionalScore").value);
-
-  if (!nameInput || isNaN(additionalScore)) {
-    alert("Please enter a valid name and score.");
-    return;
+  const addScore = parseInt(document.getElementById("additionalScore").value, 10);
+  if (!nameInput || isNaN(addScore)) {
+    return alert("Please enter a valid name and score.");
   }
 
   try {
     const usersRef = collection(db, "users");
-    const q = query(usersRef, where("firstName", "==", nameInput));
-    const querySnapshot = await getDocs(q);
+    // 1) Try matching firstName
+    let q = query(usersRef, where("firstName", "==", nameInput));
+    let snap = await getDocs(q);
 
-    if (querySnapshot.empty) {
-      alert("Participant not found.");
-      return;
+    // 2) Fallback to email prefix
+    if (snap.empty) {
+      snap = await getDocs(usersRef);
+      snap = { docs: snap.docs.filter(d => {
+        const em = d.data().email;
+        return em && em.split("@")[0].trim().toLowerCase() === nameInput.toLowerCase();
+      }) };
     }
 
-    querySnapshot.forEach(async (docSnap) => {
-      const currentScore = docSnap.data().score || 0;
-      const newScore = currentScore + additionalScore;
-      await updateDoc(doc(db, "users", docSnap.id), { score: newScore });
-    });
+    if (!snap.docs.length) {
+      return alert("Participant not found.");
+    }
+
+    // 3) Update score for each matched doc
+    for (const d of snap.docs) {
+      const ref = doc(db, "users", d.id);
+      const current = d.data().score || 0;
+      await updateDoc(ref, { score: current + addScore });
+    }
 
     alert("Score updated successfully.");
-    loadLeaderboard();
-  } catch (error) {
-    console.error("Error updating score:", error);
-    alert("An error occurred while updating the score.");
+    await loadLeaderboard();
+  } catch (err) {
+    console.error(err);
+    alert("Error updating score.");
   }
 });
 
-// Initial load
+// Wire up buttons and initial load
+document.getElementById("downloadBtn")?.addEventListener("click", downloadLeaderboard);
 loadLeaderboard();
